@@ -1,6 +1,4 @@
-from pathlib import Path
-
-html = r'''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
@@ -81,8 +79,4 @@ document.getElementById('noBtn').addEventListener('click',()=>{chatBubble.textCo
 document.getElementById('yesBtn').addEventListener('click',()=>{startScreen.style.display='none';letterScreen.style.display='flex';window.scrollTo({top:0,behavior:'smooth'});floatDecorations(38)});
 document.getElementById('backBtn').addEventListener('click',()=>{letterScreen.style.display='none';startScreen.style.display='flex';window.scrollTo({top:0,behavior:'smooth'})});
 </script>
-</body></html>'''
-
-path = Path("/mnt/data/index.html")
-path.write_text(html, encoding="utf-8")
-print(f"Đã cập nhật {path} ({path.stat().st_size:,} bytes)")
+</body></html>
