@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+from pathlib import Path
+
+html = r'''<!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
@@ -6,202 +8,59 @@
 <meta name="theme-color" content="#fff0f5">
 <title>Một món quà nhỏ dành cho Gia Hân ♡</title>
 <style>
-  :root {
-    --pink-50:#fff7fa; --pink-100:#ffeaf1; --pink-200:#ffd2e0;
-    --pink-300:#f7adc5; --pink-500:#df789b; --pink-700:#a84e70;
-    --ink:#765365; --white:#fffdfd;
-  }
-  * { box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
-  body {
-    margin:0; min-height:100svh; overflow-x:hidden;
-    color:var(--ink);
-    font-family: "Trebuchet MS", Arial, sans-serif;
-    background:
-      radial-gradient(ellipse at 12% 10%, rgba(255,255,255,.95), transparent 35%),
-      radial-gradient(ellipse at 90% 85%, rgba(255,218,232,.8), transparent 34%),
-      linear-gradient(145deg,#fff8fb 0%,#ffeaf2 48%,#fff4f6 100%);
-  }
-  button { font:inherit; }
-  .ambient { position:fixed; inset:0; overflow:hidden; pointer-events:none; z-index:0; }
-  .ambient span {
-    position:absolute; opacity:.45; color:#e68eae;
-    animation: drift 8s ease-in-out infinite;
-    user-select:none;
-  }
-  .ambient span:nth-child(1){left:5%;top:15%;font-size:24px}
-  .ambient span:nth-child(2){right:8%;top:13%;font-size:29px;animation-delay:-2s}
-  .ambient span:nth-child(3){left:9%;bottom:16%;font-size:28px;animation-delay:-4s}
-  .ambient span:nth-child(4){right:7%;bottom:18%;font-size:23px;animation-delay:-1s}
-  @keyframes drift { 50%{transform:translate3d(8px,-17px,0) rotate(12deg)} }
-  .screen {
-    position:relative; z-index:1; min-height:100svh; width:100%;
-    display:flex; align-items:center; justify-content:center;
-    padding:28px 16px calc(28px + env(safe-area-inset-bottom));
-  }
-  .panel {
-    width:min(100%,560px); text-align:center; padding:26px 20px 28px;
-    border:1px solid rgba(226,145,174,.42); border-radius:30px;
-    background:rgba(255,255,255,.76);
-    box-shadow:0 18px 55px rgba(177,104,132,.14);
-    backdrop-filter:blur(10px);
-  }
-  .tiny-label {
-    margin:0 0 9px; color:var(--pink-700); font-size:11px;
-    font-weight:800; letter-spacing:.2em; text-transform:uppercase;
-  }
-  h1 {
-    margin:0 0 7px; color:#c96e91;
-    font-family:Georgia,serif; font-size:clamp(28px,8vw,43px);
-    font-weight:normal; line-height:1.12;
-  }
-  .subtitle { margin:0 0 14px; color:#a77b8e; font-size:13px; }
-  .chat {
-    position:relative; width:fit-content; max-width:100%;
-    margin:0 auto 12px; padding:13px 17px;
-    border:1.5px solid #f2bfd0; border-radius:19px;
-    background:#fffafd; color:#995b75; font-weight:700;
-    font-size:clamp(15px,4vw,18px); line-height:1.45;
-    box-shadow:0 6px 18px rgba(205,126,157,.12);
-  }
-  .chat:after {
-    content:""; position:absolute; left:50%; bottom:-9px; width:15px; height:15px;
-    background:#fffafd; border-right:1.5px solid #f2bfd0;
-    border-bottom:1.5px solid #f2bfd0; transform:translateX(-50%) rotate(45deg);
-  }
-  .cat-wrap { width:190px; max-width:55vw; margin:0 auto 5px; }
-  .cat { width:100%; height:auto; display:block; filter:drop-shadow(0 10px 8px rgba(173,104,132,.12)); }
-  .cat-bounce { transform-origin:50% 100%; animation:cat-bob 3s ease-in-out infinite; }
-  @keyframes cat-bob { 50%{transform:translateY(-5px)} }
-  .question-hint { margin:2px 0 15px; font-size:12px; color:#b18496; }
-  .actions { display:flex; justify-content:center; align-items:center; gap:13px; min-height:54px; }
-  .choice {
-    border:0; border-radius:999px; cursor:pointer; font-weight:800;
-    transition:transform .18s, box-shadow .18s, filter .18s;
-  }
-  .choice:focus-visible,.music-toggle:focus-visible { outline:3px solid #bd6388; outline-offset:4px; }
-  .yes {
-    padding:14px 34px; color:white; font-size:16px;
-    background:linear-gradient(135deg,#ed9ab7,#d96e96);
-    box-shadow:0 8px 18px rgba(217,110,150,.27);
-  }
-  .yes:hover { transform:translateY(-2px); box-shadow:0 11px 23px rgba(217,110,150,.32); }
-  .no {
-    padding:4px 8px; color:#a96c84; font-size:9px;
-    background:#fff0f5; border:1px solid #f3cada;
-    box-shadow:0 3px 8px rgba(217,150,174,.12);
-  }
-  .no:hover { transform:scale(1.04); }
-  .music-toggle {
-    position:fixed; z-index:5; right:13px; top:13px;
-    border:1px solid #f0c4d3; border-radius:999px; padding:10px 13px;
-    color:#a75d7c; background:rgba(255,255,255,.88);
-    box-shadow:0 5px 15px rgba(174,104,132,.12); cursor:pointer;
-    font-size:12px; font-weight:700;
-  }
-  .letter-screen { display:none; align-items:flex-start; }
-  .letter {
-    width:min(100%,680px); margin:16px auto; padding:clamp(23px,5vw,42px);
-    text-align:left; border:1px solid #f0c4d3; border-radius:24px;
-    background:rgba(255,253,253,.91);
-    box-shadow:0 18px 55px rgba(177,104,132,.16);
-    animation:letter-in .8s ease both;
-  }
-  @keyframes letter-in { from{opacity:0;transform:translateY(18px) scale(.985)} to{opacity:1;transform:none} }
-  .letter-top { text-align:center; margin-bottom:23px; }
-  .letter-top .mini-heart { font-size:30px; }
-  .letter-top h2 { margin:7px 0 0; color:#c96e91; font:normal clamp(26px,7vw,36px) Georgia,serif; }
-  .letter-body { white-space:pre-line; font-size:15px; line-height:1.9; color:#725361; overflow-wrap:anywhere; }
-  .letter-end { text-align:center; margin-top:24px; color:#c96e91; font:italic 20px Georgia,serif; }
-  .back-btn {
-    display:block; margin:25px auto 0; padding:11px 18px;
-    border:1px solid #efc1d1; border-radius:999px; color:#a75d7c;
-    background:#fff5f8; cursor:pointer; font-weight:700;
-  }
-  .floaty {
-    position:fixed; z-index:8; bottom:-35px; pointer-events:none;
-    animation:rise var(--duration,5s) linear forwards;
-    color:#e47fa2; text-shadow:0 2px 7px #fff;
-  }
-  @keyframes rise { to{transform:translate3d(var(--drift,20px),-115vh,0) rotate(35deg);opacity:0} }
-  .hidden { display:none !important; }
-  @media (max-width:380px) {
-    .panel {padding:22px 15px 24px;border-radius:24px}
-    .cat-wrap {width:165px}
-    .letter-body {font-size:14px;line-height:1.8}
-  }
-  @media (prefers-reduced-motion:reduce) {
-    *,*::before,*::after {animation-duration:.01ms !important;animation-iteration-count:1 !important;scroll-behavior:auto !important}
-  }
+:root{--pink:#e88dab;--deep:#bd6386;--ink:#765365}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;overflow-x:hidden;color:var(--ink);font-family:"Trebuchet MS",Arial,sans-serif;background:radial-gradient(ellipse at 12% 10%,#fff,transparent 35%),linear-gradient(145deg,#fff8fb,#ffeaf2 55%,#fff4f6)}
+button{font:inherit}.ambient{position:fixed;inset:0;overflow:hidden;pointer-events:none}.ambient span{position:absolute;color:#e68eae;opacity:.45;animation:drift 8s ease-in-out infinite}.ambient span:nth-child(1){left:5%;top:15%;font-size:24px}.ambient span:nth-child(2){right:8%;top:13%;font-size:29px;animation-delay:-2s}.ambient span:nth-child(3){left:9%;bottom:16%;font-size:28px;animation-delay:-4s}.ambient span:nth-child(4){right:7%;bottom:18%;font-size:23px;animation-delay:-1s}
+@keyframes drift{50%{transform:translate(8px,-17px) rotate(12deg)}}
+.screen{position:relative;min-height:100svh;width:100%;display:flex;align-items:center;justify-content:center;padding:28px 16px calc(28px + env(safe-area-inset-bottom))}
+.panel{width:min(100%,560px);text-align:center;padding:26px 20px 28px;border:1px solid #e2a0b94d;border-radius:30px;background:#ffffffc7;box-shadow:0 18px 55px #b1682424;backdrop-filter:blur(10px)}
+.tiny{margin:0 0 9px;color:var(--deep);font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase}
+h1{margin:0 0 7px;color:#c96e91;font:normal clamp(28px,8vw,43px)/1.12 Georgia,serif}.subtitle{margin:0 0 14px;color:#a77b8e;font-size:13px}
+.chat{position:relative;width:fit-content;max-width:100%;margin:0 auto 12px;padding:13px 17px;border:1.5px solid #f2bfd0;border-radius:19px;background:#fffafd;color:#995b75;font-weight:700;font-size:clamp(15px,4vw,18px);line-height:1.45;box-shadow:0 6px 18px #cd7e9d1f}
+.chat:after{content:"";position:absolute;left:50%;bottom:-9px;width:15px;height:15px;background:#fffafd;border-right:1.5px solid #f2bfd0;border-bottom:1.5px solid #f2bfd0;transform:translateX(-50%) rotate(45deg)}
+.cat-wrap{width:190px;max-width:55vw;margin:0 auto 5px}.cat{width:100%;height:auto;display:block;filter:drop-shadow(0 10px 8px #ad68821f);transform-origin:50% 100%;animation:bob 3s ease-in-out infinite}@keyframes bob{50%{transform:translateY(-5px)}}
+.hint{margin:2px 0 15px;font-size:12px;color:#b18496}.actions{display:flex;justify-content:center;align-items:center;gap:13px;min-height:54px}
+.choice{border:0;border-radius:999px;cursor:pointer;font-weight:800;transition:transform .18s,box-shadow .18s}.choice:focus-visible{outline:3px solid #bd6388;outline-offset:4px}
+.yes{padding:14px 34px;color:white;font-size:16px;background:linear-gradient(135deg,#ed9ab7,#d96e96);box-shadow:0 8px 18px #d96e9645}.yes:hover{transform:translateY(-2px)}
+.no{padding:4px 8px;color:#a96c84;font-size:9px;background:#fff0f5;border:1px solid #f3cada;box-shadow:0 3px 8px #d996ae1f}
+.letter-screen{display:none;align-items:flex-start}.letter{width:min(100%,680px);margin:16px auto;padding:clamp(23px,5vw,42px);text-align:left;border:1px solid #f0c4d3;border-radius:24px;background:#fffdfde8;box-shadow:0 18px 55px #b1682429;animation:appear .8s ease both}
+@keyframes appear{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
+.letter-top{text-align:center;margin-bottom:23px}.letter-top div{font-size:30px}.letter-top h2{margin:7px 0 0;color:#c96e91;font:normal clamp(26px,7vw,36px) Georgia,serif}
+.letter-body{white-space:pre-line;font-size:15px;line-height:1.9;color:#725361;overflow-wrap:anywhere}.end{text-align:center;margin-top:24px;color:#c96e91;font:italic 20px Georgia,serif}
+.back{display:block;margin:25px auto 0;padding:11px 18px;border:1px solid #efc1d1;border-radius:999px;color:#a75d7c;background:#fff5f8;cursor:pointer;font-weight:700}
+.floaty{position:fixed;z-index:8;bottom:-35px;pointer-events:none;animation:rise var(--duration,5s) linear forwards;color:#e47fa2;text-shadow:0 2px 7px white}@keyframes rise{to{transform:translate(var(--drift,20px),-115vh) rotate(35deg);opacity:0}}
+@media(max-width:380px){.panel{padding:22px 15px 24px;border-radius:24px}.cat-wrap{width:165px}.letter-body{font-size:14px;line-height:1.8}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
 <div class="ambient" aria-hidden="true"><span>✿</span><span>♡</span><span>✧</span><span>❀</span></div>
-
-<button class="music-toggle" id="musicToggle" type="button" aria-pressed="false">♫ Bật nhạc</button>
-
 <main>
-  <section class="screen" id="startScreen">
-    <div class="panel">
-      <p class="tiny-label">A little birthday surprise</p>
-      <h1>Xin chào bạn! ♡</h1>
-      <p class="subtitle">Mèo nhỏ có một câu hỏi muốn hỏi bạn...</p>
-
-      <div class="chat" id="chatBubble" role="status" aria-live="polite">
-        Bạn có yêu Nguyễn Võ Tiến Đạt không?
-      </div>
-
-      <div class="cat-wrap" aria-label="Một chú mèo trắng dễ thương">
-        <svg class="cat cat-bounce" viewBox="0 0 240 220" role="img" aria-hidden="true">
-          <defs>
-            <linearGradient id="fur" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#fffefe"/><stop offset="1" stop-color="#fcebf1"/>
-            </linearGradient>
-          </defs>
-          <ellipse cx="120" cy="202" rx="72" ry="10" fill="#e9b5c8" opacity=".35"/>
-          <!-- tail -->
-          <path d="M174 156 C218 148 216 194 184 187 C169 184 174 169 190 171" fill="none" stroke="#f8e8ee" stroke-width="17" stroke-linecap="round"/>
-          <!-- ears -->
-          <path d="M62 79 L55 20 Q54 9 66 17 L104 49 Z" fill="url(#fur)" stroke="#eacbd7" stroke-width="3"/>
-          <path d="M178 79 L185 20 Q186 9 174 17 L136 49 Z" fill="url(#fur)" stroke="#eacbd7" stroke-width="3"/>
-          <path d="M68 57 L65 31 L88 53 Z" fill="#f5b6ca"/>
-          <path d="M172 57 L175 31 L152 53 Z" fill="#f5b6ca"/>
-          <!-- body and head -->
-          <ellipse cx="120" cy="157" rx="66" ry="52" fill="url(#fur)" stroke="#eacbd7" stroke-width="3"/>
-          <ellipse cx="120" cy="99" rx="70" ry="62" fill="url(#fur)" stroke="#eacbd7" stroke-width="3"/>
-          <!-- cheeks -->
-          <ellipse cx="82" cy="117" rx="15" ry="8" fill="#f5b4c9" opacity=".65"/>
-          <ellipse cx="158" cy="117" rx="15" ry="8" fill="#f5b4c9" opacity=".65"/>
-          <!-- eyes -->
-          <path d="M83 91 Q94 103 105 91" fill="none" stroke="#765365" stroke-width="4" stroke-linecap="round"/>
-          <path d="M135 91 Q146 103 157 91" fill="none" stroke="#765365" stroke-width="4" stroke-linecap="round"/>
-          <path d="M115 108 Q120 102 125 108 Q120 116 115 108" fill="#e88aa8"/>
-          <path d="M120 115 Q111 124 103 116 M120 115 Q129 124 137 116" fill="none" stroke="#9c687c" stroke-width="2.5" stroke-linecap="round"/>
-          <!-- paws -->
-          <ellipse cx="91" cy="185" rx="23" ry="12" fill="#fffafd" stroke="#eacbd7" stroke-width="2"/>
-          <ellipse cx="149" cy="185" rx="23" ry="12" fill="#fffafd" stroke="#eacbd7" stroke-width="2"/>
-          <!-- bow -->
-          <path d="M120 44 C99 26 91 45 111 55 L120 58 Z M120 44 C141 26 149 45 129 55 L120 58 Z" fill="#ed9ab7" stroke="#d9789b" stroke-width="2"/>
-          <circle cx="120" cy="51" r="5" fill="#c85f87"/>
-          <path d="M48 112 Q35 107 29 112 M192 112 Q205 107 211 112" fill="none" stroke="#d8b7c4" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </div>
-
-      <p class="question-hint">Hãy chọn câu trả lời của bạn nhé ♡</p>
-      <div class="actions">
-        <button class="choice yes" id="yesBtn" type="button">Có 💗</button>
-        <button class="choice no" id="noBtn" type="button">Không</button>
-      </div>
-    </div>
-  </section>
-
-  <section class="screen letter-screen" id="letterScreen">
-    <article class="letter">
-      <header class="letter-top">
-        <div class="mini-heart">💌</div>
-        <h2>Gửi em, Gia Hân</h2>
-      </header>
-      <div class="letter-body" id="letterBody">Cảm ơn em vì đã chọn yêu anh ❤️.
+<section class="screen" id="startScreen">
+<div class="panel">
+<p class="tiny">A little birthday surprise</p><h1>Xin chào bạn! ♡</h1><p class="subtitle">Mèo nhỏ có một câu hỏi muốn hỏi bạn...</p>
+<div class="chat" id="chatBubble" role="status" aria-live="polite">Bạn có yêu Nguyễn Võ Tiến Đạt không?</div>
+<div class="cat-wrap">
+<svg class="cat" viewBox="0 0 240 220" role="img" aria-label="Một chú mèo trắng dễ thương">
+<defs><linearGradient id="fur" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fcebf1"/></linearGradient></defs>
+<ellipse cx="120" cy="202" rx="72" ry="10" fill="#e9b5c8" opacity=".35"/>
+<path d="M174 156 C218 148 216 194 184 187 C169 184 174 169 190 171" fill="none" stroke="#f8e8ee" stroke-width="17" stroke-linecap="round"/>
+<path d="M62 79 L55 20 Q54 9 66 17 L104 49Z M178 79 L185 20 Q186 9 174 17 L136 49Z" fill="url(#fur)" stroke="#eacbd7" stroke-width="3"/>
+<path d="M68 57 L65 31 L88 53Z M172 57 L175 31 L152 53Z" fill="#f5b6ca"/>
+<ellipse cx="120" cy="157" rx="66" ry="52" fill="url(#fur)" stroke="#eacbd7" stroke-width="3"/><ellipse cx="120" cy="99" rx="70" ry="62" fill="url(#fur)" stroke="#eacbd7" stroke-width="3"/>
+<ellipse cx="82" cy="117" rx="15" ry="8" fill="#f5b4c9" opacity=".65"/><ellipse cx="158" cy="117" rx="15" ry="8" fill="#f5b4c9" opacity=".65"/>
+<path d="M83 91 Q94 103 105 91 M135 91 Q146 103 157 91" fill="none" stroke="#765365" stroke-width="4" stroke-linecap="round"/>
+<path d="M115 108 Q120 102 125 108 Q120 116 115 108" fill="#e88aa8"/><path d="M120 115 Q111 124 103 116 M120 115 Q129 124 137 116" fill="none" stroke="#9c687c" stroke-width="2.5" stroke-linecap="round"/>
+<ellipse cx="91" cy="185" rx="23" ry="12" fill="#fffafd" stroke="#eacbd7" stroke-width="2"/><ellipse cx="149" cy="185" rx="23" ry="12" fill="#fffafd" stroke="#eacbd7" stroke-width="2"/>
+<path d="M120 44 C99 26 91 45 111 55 L120 58Z M120 44 C141 26 149 45 129 55 L120 58Z" fill="#ed9ab7" stroke="#d9789b" stroke-width="2"/><circle cx="120" cy="51" r="5" fill="#c85f87"/>
+<path d="M48 112 Q35 107 29 112 M192 112 Q205 107 211 112" fill="none" stroke="#d8b7c4" stroke-width="2" stroke-linecap="round"/>
+</svg></div>
+<p class="hint">Hãy chọn câu trả lời của bạn nhé ♡</p>
+<div class="actions"><button class="choice yes" id="yesBtn" type="button">Có 💗</button><button class="choice no" id="noBtn" type="button">Không</button></div>
+</div></section>
+<section class="screen letter-screen" id="letterScreen">
+<article class="letter"><header class="letter-top"><div>💌</div><h2>Gửi em, Gia Hân</h2></header>
+<div class="letter-body">Cảm ơn em vì đã chọn yêu anh ❤️.
 
 Hôm nay là ngày 13/11/2026 – ngày mà em, người nắm giữ toàn bộ tâm trí và trái tim của anh, chính thức bước sang tuổi 18 ✨. Vào ngày này của 18 năm về trước, một em bé đã chào đời. Tuy em bé ấy không có cánh, nhưng vẫn luôn là một thiên thần trong mắt mọi người, và đặc biệt là với anh 👼💖.
 
@@ -212,126 +71,18 @@ Em là cô gái hoàn hảo nhất mà anh từng gặp – không chỉ dễ th
 Chúc mừng sinh nhật Phạm Nguyễn Gia Hân 🎂🎉! Chúc em có một ngày thật trọn vẹn và vui vẻ bên người thân, bạn bè. Tuổi 18 là cánh cửa đầu tiên mở ra những chân trời mới đầy rực rỡ nhưng cũng không ít thử thách 🌟. Bước vào hành trình trưởng thành này, anh chúc em luôn giữ vững sự tự tin để chạm tay vào mọi ước mơ mà em ấp ủ. Dù thế giới ngoài kia có rộng lớn đến đâu, phía sau em vẫn luôn có anh – người thương em, ủng hộ em và sẵn sàng đồng hành cùng em qua từng cột mốc của tuổi trẻ 🫂.
 
 Chúc em tuổi 18 thật rực rỡ. Yêu em ❤️.</div>
-      <div class="letter-end">Chúc em luôn hạnh phúc ♡</div>
-      <button class="back-btn" id="backBtn" type="button">Quay lại với mèo nhỏ</button>
-    </article>
-  </section>
+<div class="end">Chúc em luôn hạnh phúc ♡</div><button class="back" id="backBtn" type="button">Quay lại với mèo nhỏ</button>
+</article></section>
 </main>
-
 <script>
-  const startScreen = document.getElementById('startScreen');
-  const letterScreen = document.getElementById('letterScreen');
-  const chatBubble = document.getElementById('chatBubble');
-  const yesBtn = document.getElementById('yesBtn');
-  const noBtn = document.getElementById('noBtn');
-  const musicToggle = document.getElementById('musicToggle');
-  let audioContext = null;
-  let musicTimer = null;
-  let musicOn = false;
-  let noteIndex = 0;
-
-  // A small original synthesized melody, so the page does not depend on copyrighted music files.
-  const melody = [
-    [523.25, 0.34], [659.25, 0.34], [783.99, 0.5], [659.25, 0.34],
-    [587.33, 0.34], [659.25, 0.34], [698.46, 0.5], [587.33, 0.5],
-    [523.25, 0.34], [587.33, 0.34], [659.25, 0.5], [523.25, 0.6]
-  ];
-
-  function playNote(frequency, duration) {
-    if (!audioContext || !musicOn) return;
-    const now = audioContext.currentTime;
-    const oscillator = audioContext.createOscillator();
-    const gain = audioContext.createGain();
-    const mellow = audioContext.createOscillator();
-    const mellowGain = audioContext.createGain();
-
-    oscillator.type = 'sine';
-    oscillator.frequency.value = frequency;
-    gain.gain.setValueAtTime(0.0001, now);
-    gain.gain.exponentialRampToValueAtTime(0.045, now + 0.035);
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-
-    mellow.type = 'sine';
-    mellow.frequency.value = frequency / 2;
-    mellowGain.gain.setValueAtTime(0.0001, now);
-    mellowGain.gain.exponentialRampToValueAtTime(0.012, now + 0.05);
-    mellowGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-
-    oscillator.connect(gain); gain.connect(audioContext.destination);
-    mellow.connect(mellowGain); mellowGain.connect(audioContext.destination);
-    oscillator.start(now); mellow.start(now);
-    oscillator.stop(now + duration + 0.03); mellow.stop(now + duration + 0.03);
-  }
-
-  async function toggleMusic() {
-    try {
-      if (!audioContext) {
-        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-        if (!AudioContextClass) {
-          musicToggle.textContent = 'Trình duyệt không hỗ trợ nhạc';
-          return;
-        }
-        audioContext = new AudioContextClass();
-      }
-      if (audioContext.state === 'suspended') await audioContext.resume();
-      musicOn = !musicOn;
-      musicToggle.setAttribute('aria-pressed', String(musicOn));
-      musicToggle.textContent = musicOn ? '♫ Tắt nhạc' : '♫ Bật nhạc';
-      if (musicOn) {
-        playNote(melody[noteIndex][0], melody[noteIndex][1]);
-        musicTimer = window.setInterval(() => {
-          noteIndex = (noteIndex + 1) % melody.length;
-          playNote(melody[noteIndex][0], melody[noteIndex][1]);
-        }, 430);
-      } else {
-        window.clearInterval(musicTimer);
-      }
-    } catch (error) {
-      musicToggle.textContent = 'Không thể phát nhạc';
-    }
-  }
-
-  function floatDecorations(count = 24) {
-    const symbols = ['♡', '♥', '✿', '❀', '🌸'];
-    for (let i = 0; i < count; i++) {
-      window.setTimeout(() => {
-        const item = document.createElement('span');
-        item.className = 'floaty';
-        item.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-        item.style.left = (Math.random() * 100) + 'vw';
-        item.style.fontSize = (15 + Math.random() * 21) + 'px';
-        item.style.setProperty('--duration', (4.5 + Math.random() * 2.5) + 's');
-        item.style.setProperty('--drift', (Math.random() * 90 - 45) + 'px');
-        document.body.appendChild(item);
-        window.setTimeout(() => item.remove(), 7500);
-      }, i * 110);
-    }
-  }
-
-  noBtn.addEventListener('click', () => {
-    chatBubble.textContent = 'Bạn chọn nhầm rồi bạn yêu ơi!!!';
-    chatBubble.animate(
-      [{ transform:'scale(.96)' }, { transform:'scale(1.04)' }, { transform:'scale(1)' }],
-      { duration:420, easing:'ease-out' }
-    );
-    floatDecorations(10);
-  });
-
-  yesBtn.addEventListener('click', () => {
-    startScreen.style.display = 'none';
-    letterScreen.style.display = 'flex';
-    window.scrollTo({ top:0, behavior:'smooth' });
-    floatDecorations(38);
-    if (!musicOn) toggleMusic();
-  });
-
-  document.getElementById('backBtn').addEventListener('click', () => {
-    letterScreen.style.display = 'none';
-    startScreen.style.display = 'flex';
-    window.scrollTo({ top:0, behavior:'smooth' });
-  });
-
-  musicToggle.addEventListener('click', toggleMusic);
+const startScreen=document.getElementById('startScreen'),letterScreen=document.getElementById('letterScreen'),chatBubble=document.getElementById('chatBubble');
+function floatDecorations(count=24){const symbols=['♡','♥','✿','❀','🌸'];for(let i=0;i<count;i++)setTimeout(()=>{const el=document.createElement('span');el.className='floaty';el.textContent=symbols[Math.floor(Math.random()*symbols.length)];el.style.left=Math.random()*100+'vw';el.style.fontSize=15+Math.random()*21+'px';el.style.setProperty('--duration',4.5+Math.random()*2.5+'s');el.style.setProperty('--drift',Math.random()*90-45+'px');document.body.appendChild(el);setTimeout(()=>el.remove(),7500)},i*110)}
+document.getElementById('noBtn').addEventListener('click',()=>{chatBubble.textContent='Bạn chọn nhầm rồi bạn yêu ơi!!!';chatBubble.animate([{transform:'scale(.96)'},{transform:'scale(1.04)'},{transform:'scale(1)'}],{duration:420,easing:'ease-out'});floatDecorations(10)});
+document.getElementById('yesBtn').addEventListener('click',()=>{startScreen.style.display='none';letterScreen.style.display='flex';window.scrollTo({top:0,behavior:'smooth'});floatDecorations(38)});
+document.getElementById('backBtn').addEventListener('click',()=>{letterScreen.style.display='none';startScreen.style.display='flex';window.scrollTo({top:0,behavior:'smooth'})});
 </script>
-</body>
-</html>
+</body></html>'''
+
+path = Path("/mnt/data/index.html")
+path.write_text(html, encoding="utf-8")
+print(f"Đã cập nhật {path} ({path.stat().st_size:,} bytes)")
